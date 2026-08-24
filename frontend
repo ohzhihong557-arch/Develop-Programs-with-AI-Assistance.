@@ -1,1 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CareBridge Hospital System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 30px; text-align: center; }
+        .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: inline-block; }
+        input, button { padding: 10px; margin: 10px; font-size: 16px; border-radius: 4px; border: 1px solid #ccc; }
+        button { background-color: #007bff; color: white; cursor: pointer; border: none; }
+        #result { margin-top: 20px; font-weight: bold; color: #28a745; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>CareBridge Patient Triage</h2>
+        <p>Enter condition severity level (1-10):</p>
+        <input type="number" id="severityInput" min="1" max="10">
+        <br>
+        <button onclick="sendTriageData()">Submit Patient Data</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        async function sendTriageData() {
+            const severityValue = document.getElementById('severityInput').value;
+            // Sends the input data straight to your Python backend
+            const response = await fetch('http://127.0.0', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ severity: severityValue })
+            });
+            const data = await response.json();
+            document.getElementById('result').innerText = "Assigned Room: " + data.assigned_room;
+        }
+    </script>
+</body>
+</html>
 
