@@ -1,1 +1,25 @@
+FUNCTION process_patient_triage():
+    WHILE true:
+        PRINT "Enter severity level (1-10):"
+        READ input_str
+        IF input_str consists only of digits THEN
+            severity = CONVERT_TO_INTEGER(input_str)
+            IF severity >= 1 AND severity <= 10 THEN
+                BREAK WHILE LOOP
+            ENDIF
+        ENDIF
+        PRINT "Error: Invalid entry. Enter a whole number from 1 to 10."
+    ENDWHILE
 
+    IF severity <= 4 THEN
+        room = "Waiting Room"
+    ELSE IF severity <= 7 THEN
+        room = "Room 1"
+    ELSE
+        room = "Room 2"
+    ENDIF
+
+    PRINT "=== TRIAGE SUMMARY ==="
+    PRINT "Severity Rating: " + severity
+    PRINT "Assigned Location: " + room
+END FUNCTION
