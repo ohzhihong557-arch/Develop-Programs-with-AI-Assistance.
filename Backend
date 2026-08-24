@@ -1,1 +1,25 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)  # This allows your frontend HTML file to talk to this backend server safely
+
+@app.route('/api/triage', methods=['POST'])
+def process_triage():
+    data = request.json
+    severity = int(data.get('severity', 1))
+    
+    # --- Refactored logic integrated directly from your 'Zack' script ---
+    if severity <= 4:
+        room = "Waiting Room"
+    elif severity <= 7:
+        room = "Room 1"
+    else:
+        room = "Room 2"
+        
+    return jsonify({"status": "success", "assigned_room": room})
+
+if __name__ == '__main__':
+    # Running on port 5000—important for your upcoming Docker/ngrok steps!
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
