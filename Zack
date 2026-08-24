@@ -1,25 +1,22 @@
-FUNCTION process_patient_triage():
-    WHILE true:
-        PRINT "Enter severity level (1-10):"
-        READ input_str
-        IF input_str consists only of digits THEN
-            severity = CONVERT_TO_INTEGER(input_str)
-            IF severity >= 1 AND severity <= 10 THEN
-                BREAK WHILE LOOP
-            ENDIF
-        ENDIF
-        PRINT "Error: Invalid entry. Enter a whole number from 1 to 10."
-    ENDWHILE
+def process_patient_triage() -> None:
+    """Prompts for severity rating, validates range 1-10, and outputs triage assignment."""
+    while True:
+        raw_input = input("Enter condition severity (1-10): ").strip()
 
-    IF severity <= 4 THEN
+        if raw_input.isdigit():
+            severity = int(raw_input)
+            if 1 <= severity <= 10:
+                break
+
+        print("Error: Invalid input. Please enter a whole number from 1 to 10.\n")
+
+    if severity <= 4:
         room = "Waiting Room"
-    ELSE IF severity <= 7 THEN
+    elif severity <= 7:
         room = "Room 1"
-    ELSE
+    else:
         room = "Room 2"
-    ENDIF
 
-    PRINT "=== TRIAGE SUMMARY ==="
-    PRINT "Severity Rating: " + severity
-    PRINT "Assigned Location: " + room
-END FUNCTION
+    print("\n=== TRIAGE SUMMARY ===")
+    print(f"Severity Level : {severity}")
+    print(f"Assigned Room  : {room}")
