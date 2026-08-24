@@ -1,5 +1,4 @@
 def process_patient_triage() -> None:
-    """Prompts for severity rating, validates range 1-10, and outputs triage assignment."""
     while True:
         raw_input = input("Enter condition severity (1-10): ").strip()
 
