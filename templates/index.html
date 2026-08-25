@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareBridge · Hospital Directory</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="board">
+  <div class="board-title">
+    <span class="board-eyebrow">CareBridge Hospital</span>
+    <h1>Directory &amp; Services</h1>
+  </div>
+
+  <nav class="board-list" id="wing-nav">
+    <button class="wing" data-wing="register" aria-current="true">
+      <span class="wing-code">REG·1</span>
+      <span class="wing-name">Registration</span>
+      <span class="wing-arrow">→</span>
+    </button>
+    <button class="wing" data-wing="appointment">
+      <span class="wing-code">APT·2</span>
+      <span class="wing-name">Appointments</span>
+      <span class="wing-arrow">→</span>
+    </button>
+    <button class="wing" data-wing="billing">
+      <span class="wing-code">BIL·3</span>
+      <span class="wing-name">Billing</span>
+      <span class="wing-arrow">→</span>
+    </button>
+    <button class="wing" data-wing="triage">
+      <span class="wing-code">TRI·4</span>
+      <span class="wing-name">Triage</span>
+      <span class="wing-arrow">→</span>
+    </button>
+  </nav>
+</header>
+
+<main class="floor">
+
+  <!-- REGISTRATION -->
+  <section class="ward" id="ward-register" data-wing="register">
+    <form class="clipboard" id="form-register">
+      <div class="clip"></div>
+      <p class="ward-eyebrow">REG·1 — Registration Desk</p>
+      <h2>Register a Patient</h2>
+
+      <label>Full name
+        <input type="text" name="name" placeholder="e.g. Wei Ling Tan" required>
+      </label>
+      <label>Age
+        <input type="number" name="age" min="0" step="0.5" placeholder="e.g. 34" required>
+      </label>
+      <label>Patient ID
+        <input type="text" name="patient_id" placeholder="e.g. P-1042" required>
+      </label>
+
+      <button type="submit">Register patient</button>
+      <p class="ward-note" data-note="register"></p>
+    </form>
+
+    <aside class="slip" id="slip-register">
+      <div class="slip-empty">A patient chart will print here once registered.</div>
+    </aside>
+  </section>
+
+  <!-- APPOINTMENTS -->
+  <section class="ward hidden" id="ward-appointment" data-wing="appointment">
+    <form class="clipboard" id="form-appointment">
+      <div class="clip"></div>
+      <p class="ward-eyebrow">APT·2 — Appointments Desk</p>
+      <h2>Book an Appointment</h2>
+
+      <label>Department
+        <select name="department" required>
+          <option value="" disabled selected>Choose a department</option>
+          <option value="GP">GP</option>
+          <option value="Specialist">Specialist</option>
+        </select>
+      </label>
+      <label>Preferred date <span class="hint">(within the next 7 days)</span>
+        <input type="date" name="date" required>
+      </label>
+
+      <button type="submit">Confirm booking</button>
+      <p class="ward-note" data-note="appointment"></p>
+    </form>
+
+    <aside class="slip" id="slip-appointment">
+      <div class="slip-empty">Your booking confirmation will print here.</div>
+    </aside>
+  </section>
+
+  <!-- BILLING -->
+  <section class="ward hidden" id="ward-billing" data-wing="billing">
+    <form class="clipboard" id="form-billing">
+      <div class="clip"></div>
+      <p class="ward-eyebrow">BIL·3 — Billing Desk</p>
+      <h2>Calculate Bill</h2>
+
+      <label>Patient type
+        <select name="patient_type" required>
+          <option value="" disabled selected>Choose patient type</option>
+          <option value="Subsidised">Subsidised</option>
+          <option value="Private">Private</option>
+        </select>
+      </label>
+      <label>Lab tests completed
+        <input type="number" name="num_labtests" min="0" step="1" value="0" required>
+      </label>
+
+      <p class="rate-note">Base consultation: $100 &nbsp;·&nbsp; Lab test: $10 each &nbsp;·&nbsp; Subsidised: 30% off</p>
+
+      <button type="submit">Calculate total</button>
+      <p class="ward-note" data-note="billing"></p>
+    </form>
+
+    <aside class="slip" id="slip-billing">
+      <div class="slip-empty">The itemised bill will print here.</div>
+    </aside>
+  </section>
+
+  <!-- TRIAGE -->
+  <section class="ward hidden" id="ward-triage" data-wing="triage">
+    <form class="clipboard" id="form-triage">
+      <div class="clip"></div>
+      <p class="ward-eyebrow">TRI·4 — Triage Desk</p>
+      <h2>Assign Triage Room</h2>
+
+      <label>Condition severity <span class="hint">(1 = mild, 10 = critical)</span>
+        <input type="range" name="severity" min="1" max="10" value="5" id="severity-range">
+        <output id="severity-output">5</output>
+      </label>
+
+      <button type="submit">Assign room</button>
+      <p class="ward-note" data-note="triage"></p>
+    </form>
+
+    <aside class="slip" id="slip-triage">
+      <div class="slip-empty">The room assignment will print here.</div>
+    </aside>
+  </section>
+
+</main>
+
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>
