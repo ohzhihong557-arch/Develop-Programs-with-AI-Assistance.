@@ -60,12 +60,3 @@ edge cases like duplicate patient IDs and out-of-range dates/severities) —
 see the project chat log for the request/response pairs. Behaviour matches
 the original CLI script's rules exactly.
 
-## Next steps (Modules 3–5)
-
-- **Module 3 (Docker):** wrap this Flask app in a `Dockerfile` on
-  `python:3.12-alpine`.
-- **Module 4 (ngrok):** run `ngrok http 5000` to get a public URL once the
-  container is running locally.
-- **Module 5 (AI Assistance):** document how AI was used to port the CLI
-  logic into Flask routes + a frontend, and what you had to fix/verify
-  yourselves (e.g. the validation-parity checks above).
