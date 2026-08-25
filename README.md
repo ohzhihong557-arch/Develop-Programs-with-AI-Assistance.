@@ -1,4 +1,5 @@
 # CareBridge — Module 2: Web Redesign & AI Refactoring
+(NOTICE, PRYDOXIA AND WH31E ARE UNDER WEI)
 
 This rebuilds the original CLI tool (`register_patient`, `book_appointment`,
 `calculate_bill`, `process_patient_triage`) as a small **Flask** web app with
