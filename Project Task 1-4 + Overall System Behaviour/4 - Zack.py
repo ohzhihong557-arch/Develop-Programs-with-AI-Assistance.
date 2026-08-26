@@ -19,3 +19,6 @@ def process_patient_triage() -> None:
     print("\n=== TRIAGE SUMMARY ===")
     print(f"Severity Level : {severity}")
     print(f"Assigned Room  : {room}")
+
+# Call the function so it runs when you execute the script
+process_patient_triage()
