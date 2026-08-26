@@ -1,3 +1,4 @@
+#kyle checked this
 def calculate_bill():
     # Prompt and validate Patient_type
     patient_type = input("Choose patient type (Subsidised/Private): ")
