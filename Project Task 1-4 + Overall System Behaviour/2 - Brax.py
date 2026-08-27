@@ -1,51 +1,50 @@
-from datetime import datetime, timedelta
+from datetime import datetime
+
 
 def book_appointment():
-    # Calculate today's date and the minimum allowed date boundary (current date + 7 days)
-    current_date = datetime.now().date()
-    min_date = current_date + timedelta(days=7)
-    
-    # Step 1: Validate Department Input
-    selected_department = ""
+    # Step 1: Department Selection and Validation
     while True:
-        user_input = input("Select Department (GP / Specialist): ").strip()
-        
-        # Case-insensitive validation for flexibility
-        if user_input.lower() in ["gp", "specialist"]:
-            # Format nicely as 'GP' or 'Specialist'
-            selected_department = "GP" if user_input.lower() == "gp" else "Specialist"
+        department = input("Select Department (GP / Specialist): ").strip()
+        if department.upper() in ["GP", "SPECIALIST"]:
+            department = (
+                "GP" if department.upper() == "GP" else "Specialist"
+            )
             break
-        else:
-            print("Error: Invalid department. Please enter 'GP' or 'Specialist'.\n")
-            
-    # Step 2: Validate Appointment Date
-    appointment_date = None
+        print("Error: Invalid department. Please enter 'GP' or 'Specialist'.\n")
+
+    # Step 2: Date Input and Validation
     while True:
-        date_input = input("Enter preferred appointment date (YYYY-MM-DD): ").strip()
-        
+        current_date = datetime.now().date()
+        date_str = input(
+            "Enter preferred appointment date (YYYY-MM-DD): "
+        ).strip()
+
         try:
-            # Parse input string to a date object
-            parsed_date = datetime.strptime(date_input, "%Y-%m-%d").date()
-            
-            # Condition check: Must be strictly MORE than 7 days from today
-            if parsed_date > min_date:
-                appointment_date = parsed_date
-                break
-            else:
-                print(f"Error: Date must be more than 7 days from today (after {min_date.strftime('%Y-%m-%d')}).\n")
-                
+            appointment_date = datetime.strptime(date_str, "%Y-%m-%d").date()
         except ValueError:
-            print("Error: Invalid date format. Please use the format YYYY-MM-DD (e.g., 2026-09-15).\n")
+            print("Error: Invalid date format. Please use YYYY-MM-DD.\n")
+            continue
 
-    # Step 3: Confirmation Output
-    print("\n" + "=" * 40)
-    print("BOOKING CONFIRMED")
-    print("=" * 40)
-    print(f"Department:       {selected_department}")
+        days_diff = (appointment_date - current_date).days
+
+        # Reject past dates and dates beyond 7 days from today
+        if days_diff <= 0:
+            print("Error: Appointment date must be in the future.\n")
+        elif days_diff > 7:
+            print(
+                f"Error: Appointment date must be within 7 days of today ({current_date}). Please re-enter.\n"
+            )
+        else:
+            break
+
+    # Step 3: Confirmation
+    print("\n==============================")
+    print("   BOOKING CONFIRMED")
+    print("==============================")
+    print(f"Department:       {department}")
     print(f"Appointment Date: {appointment_date.strftime('%A, %B %d, %Y')}")
-    print("=" * 40)
+    print("==============================")
 
-# Run the function
+
 if __name__ == "__main__":
     book_appointment()
-
