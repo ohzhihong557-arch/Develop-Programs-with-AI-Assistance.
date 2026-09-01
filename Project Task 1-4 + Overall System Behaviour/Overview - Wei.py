@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime
 
 BASE_CONSULTATION_FEE = 100
 LAB_TEST_RATE = 10
@@ -39,63 +39,97 @@ def register_patient():
     print("\nPatient registered successfully.")
 
 def book_appointment():
-    # Calculate today's date and the maximum allowed date
-    current_date = datetime.now().date()
-    max_date = current_date + timedelta(days=7)
-
-    # Step 1: Validate Department Input
-    selected_department = ""
-
     while True:
-        user_input = input("Select Department (GP / Specialist): ").strip()
+        # Step 1: Department Selection and Validation
+        while True:
+            department = input(
+                "Select Department (GP / Specialist): "
+            ).strip()
 
-        if user_input.lower() in ["gp", "specialist"]:
-            selected_department = (
-                "GP" if user_input.lower() == "gp" else "Specialist"
-            )
-            break
-        else:
-            print("Error: Invalid department. Please enter 'GP' or 'Specialist'.\n")
-
-    # Step 2: Validate Appointment Date
-    appointment_date = None
-
-    while True:
-        date_input = input(
-            "Enter preferred appointment date (YYYY-MM-DD): "
-        ).strip()
-
-        try:
-            parsed_date = datetime.strptime(
-                date_input, "%Y-%m-%d"
-            ).date()
-
-            # Appointment must be today or within the next 7 days
-            if current_date <= parsed_date <= max_date:
-                appointment_date = parsed_date
+            if department.upper() in ["GP", "SPECIALIST"]:
+                department = (
+                    "GP" if department.upper() == "GP" else "Specialist"
+                )
                 break
-            else:
+
+            print(
+                "Error: Invalid department. "
+                "Please enter 'GP' or 'Specialist'.\n"
+            )
+
+        # Step 2: Date Input and Validation
+        while True:
+            current_date = datetime.now().date()
+
+            date_str = input(
+                "Enter preferred appointment date (YYYY-MM-DD): "
+            ).strip()
+
+            try:
+                appointment_date = datetime.strptime(
+                    date_str, "%Y-%m-%d"
+                ).date()
+            except ValueError:
+                print(
+                    "Error: Date is not correctly entered. "
+                    "Please use YYYY-MM-DD format.\n"
+                )
+                continue
+
+            days_diff = (appointment_date - current_date).days
+
+            # Appointment must be in the future and within 7 days
+            if days_diff <= 0:
+                print(
+                    "Error: Appointment date must be in the future.\n"
+                )
+            elif days_diff > 7:
                 print(
                     f"Error: Appointment date must be within 7 days "
                     f"of today ({current_date}). Please re-enter.\n"
                 )
+            else:
+                break
 
-        except ValueError:
-            print(
-                "Error: Invalid date format. "
-                "Please use YYYY-MM-DD (e.g., 2026-08-30).\n"
-            )
+        # Step 3: Appointment Confirmation
+        print("\n==============================")
+        print("     APPOINTMENT DETAILS")
+        print("==============================")
+        print(f"Department:       {department}")
+        print(
+            f"Appointment Date: "
+            f"{appointment_date.strftime('%A, %B %d, %Y')}"
+        )
+        print("==============================")
 
-    # Step 3: Confirmation Output
-    print("\n" + "=" * 40)
-    print("BOOKING CONFIRMED")
-    print("=" * 40)
-    print(f"Department: {selected_department}")
-    print(
-        f"Appointment Date: "
-        f"{appointment_date.strftime('%A, %B %d, %Y')}"
-    )
-    print("=" * 40)
+        while True:
+            confirmation = input(
+                "Confirm appointment? (Yes/No): "
+            ).strip().lower()
+
+            if confirmation == "yes":
+                print("\n==============================")
+                print("     APPOINTMENT BOOKED")
+                print("==============================")
+                print(f"Department:       {department}")
+                print(
+                    f"Appointment Date: "
+                    f"{appointment_date.strftime('%A, %B %d, %Y')}"
+                )
+                print("Thank you for your service!")
+                print("==============================")
+                return
+
+            elif confirmation == "no":
+                print(
+                    "\nAppointment cancelled. "
+                    "Restarting booking process...\n"
+                )
+                break
+
+            else:
+                print("Error: Please enter Yes or No.\n")
+
 
 def calculate_bill():
     # Prompt and validate Patient_type
@@ -180,5 +214,3 @@ def main_menu():
 # Run the integrated program
 if __name__ == "__main__":
     main_menu()
-
-
