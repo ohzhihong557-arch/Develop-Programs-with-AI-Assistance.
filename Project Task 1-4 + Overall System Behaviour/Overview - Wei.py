@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 BASE_CONSULTATION_FEE = 100
 LAB_TEST_RATE = 10
 
