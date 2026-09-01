@@ -1,4 +1,5 @@
-#kyle checked this
+BASE_CONSULTATION_FEE = 100
+LAB_TEST_RATE = 10
 def calculate_bill():
     # Prompt and validate Patient_type
     patient_type = input("Choose patient type (Subsidised/Private): ")
