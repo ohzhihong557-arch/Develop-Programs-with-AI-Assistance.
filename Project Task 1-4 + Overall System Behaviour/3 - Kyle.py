@@ -1,4 +1,3 @@
-K
 BASE_CONSULTATION_FEE = 100
 LAB_TEST_RATE = 10
 def calculate_bill():
